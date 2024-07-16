@@ -1,0 +1,1 @@
+enum FeedbackType { positive, negative }

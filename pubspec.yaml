@@ -1,0 +1,54 @@
+name: scripted
+description: "A game about words"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+  flutter: '>=3.19.0'
+
+dependencies:
+  audioplayers: ^6.0.0
+  awesome_icons: ^1.1.0
+  double_tap_exit: ^0.0.11
+  flutter:
+    sdk: flutter
+  get: ^4.6.6
+  get_it: ^7.7.0
+  glowy_borders: ^1.0.2
+  pie_menu: ^3.2.1
+  provider: ^6.1.2
+  scroll_loop_auto_scroll: ^0.0.5
+  shared_preferences: ^2.2.3
+  tap_debouncer: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  image_path_android: "assets/images/launch_icon.png"
+  adaptive_icon_foreground: "assets/images/launch_icon_foreground.png"
+  adaptive_icon_background: "#000000"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/images/launch_icon.png"
+    background_color: "#000000"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sounds/ambience.wav
+  fonts:
+    - family: Mandrill
+      fonts:
+        - asset: assets/fonts/Mandrill.ttf
+    - family: GridMandrillMusa
+      fonts:
+        - asset: assets/fonts/GridMandrillMusa.ttf
