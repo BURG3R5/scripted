@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 
 import '../constants/enums/feedback_type.dart';
 import '../constants/enums/game.dart';
-import '../constants/enums/operation.dart';
 import '../constants/predefined_puzzles.dart';
 import '../core/locator.dart';
 import '../models/cheat_input.dart';
@@ -110,10 +109,7 @@ class MathsGameViewModel extends BaseViewModel {
       _puzzle = mathsPuzzles[_score];
     } else if (_score == mathsPuzzles.length && kDebugMode) {
       _puzzle = const MathsPuzzle(
-        operand1: 'END OF PRE',
-        operation: Operation.unknown,
-        operand2: 'DEFINED',
-        result: 'PUZZLES',
+        equation: 'END OF PRE # DEFINED PUZZLES',
         solution: ['/'],
       );
     } else {

@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import '../models/directions_puzzle.dart';
 import '../models/maths_puzzle.dart';
-import 'enums/operation.dart';
 
 const directionsPuzzles = <DirectionsPuzzle>[
   // region basic
@@ -215,47 +214,14 @@ const directionsPuzzles = <DirectionsPuzzle>[
 ];
 
 const mathsPuzzles = <MathsPuzzle>[
-  MathsPuzzle(
-    operand1: '1',
-    operation: Operation.add,
-    operand2: '1',
-    result: '?',
-    solution: ['2'],
-  ),
-  MathsPuzzle(
-    operand1: '2',
-    operation: Operation.add,
-    operand2: '1',
-    result: '?',
-    solution: ['3'],
-  ),
-  MathsPuzzle(
-    operand1: '2',
-    operation: Operation.add,
-    operand2: '2',
-    result: '?',
-    solution: ['4'],
-  ),
-  MathsPuzzle(
-    operand1: '1',
-    operation: Operation.add,
-    operand2: '0',
-    result: '?',
-    solution: ['1'],
-  ),
-  MathsPuzzle(
-    operand1: '4',
-    operation: Operation.add,
-    operand2: '?',
-    result: '10',
-    solution: ['1'],
-  ),
-  MathsPuzzle(
-    operand1: '?',
-    operation: Operation.add,
-    operand2: '3',
-    result: '10',
-    solution: ['1'],
-  ),
+  // region faces
+  MathsPuzzle(equation: '0 / 0 = ?', solution: ['0']),
+  MathsPuzzle(equation: '0 / 1 = ?', solution: ['1']),
+  MathsPuzzle(equation: '1 / 1 = ?', solution: ['2']),
+  MathsPuzzle(equation: '2 / 1 = ?', solution: ['3']),
+  MathsPuzzle(equation: '2 / 2 = ?', solution: ['4']),
+  MathsPuzzle(equation: '1 / 0 = ?', solution: ['1']),
+  MathsPuzzle(equation: '3 / 1 = ?', solution: ['4']),
+  // endregion
   // TODO: Add more puzzles
 ];

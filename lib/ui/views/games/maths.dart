@@ -77,7 +77,7 @@ class MathsGame extends StatelessWidget {
   }
 
   Widget _buildEquation(BuildContext context, MathsGameViewModel model) {
-    var equation = model.puzzle.toStringWithoutSolution();
+    var equation = model.puzzle.equation;
     var inputFieldIndex = -1;
 
     GlowText buildCharacter(String character) {
@@ -110,6 +110,7 @@ class MathsGame extends StatelessWidget {
           inputOptions.length,
           (optionIndex) {
             final inputCharacter = inputOptions[optionIndex].toString();
+            final thisInputFieldIndex = inputFieldIndex;
 
             return PieAction(
               child: SizedBox(
@@ -120,17 +121,15 @@ class MathsGame extends StatelessWidget {
                 ),
               ),
               tooltip: Container(),
-              onSelect: () => model.onInput(inputFieldIndex, inputCharacter),
+              onSelect: () =>
+                  model.onInput(thisInputFieldIndex, inputCharacter),
             );
           },
         ),
-        child: SizedBox(
-          width: 40,
-          child: AnimatedOpacity(
-            opacity: model.flashingInputFlag ? 1 : 0.3,
-            duration: MathsGameViewModel.flashingDuration,
-            child: buildCharacter(model.currentInput[inputFieldIndex]),
-          ),
+        child: AnimatedOpacity(
+          opacity: model.flashingInputFlag ? 1 : 0.3,
+          duration: MathsGameViewModel.flashingDuration,
+          child: buildCharacter(model.currentInput[inputFieldIndex]),
         ),
       );
     }
@@ -157,7 +156,7 @@ class MathsGame extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
             equation.length,
-            (index) => (equation[index] != '?')
+            (index) => (!'?#'.contains(equation[index]))
                 ? buildCharacter(equation[index])
                 : buildInput(index),
           ),

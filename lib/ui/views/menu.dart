@@ -18,7 +18,6 @@ class Menu extends StatelessWidget {
     return BaseView<MenuViewModel>(
       builder: (context, model, child) {
         return Scaffold(
-          // TODO: Add text along the sides
           body: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 15,
