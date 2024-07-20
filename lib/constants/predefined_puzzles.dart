@@ -247,5 +247,4 @@ const mathsPuzzles = <MathsPuzzle>[
   MathsPuzzle(equation: r'?0? \ ?0 = 223', solution: ['3', '3', '3']),
   // endregion
   // TODO: Add more puzzles
-  // TODO: Don't reset MathsPuzzle score if wrong.
 ];

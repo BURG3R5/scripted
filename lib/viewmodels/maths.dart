@@ -50,6 +50,7 @@ class MathsGameViewModel extends BaseViewModel {
 
   // Data:
   late int _score;
+  late int _puzzleIndex;
   var _puzzle = MathsPuzzle.empty;
   var _feedbackType = FeedbackType.positive;
   String? _feedbackText;
@@ -60,6 +61,8 @@ class MathsGameViewModel extends BaseViewModel {
 
   // Getters:
   int get score => _score;
+
+  int get puzzleIndex => _puzzleIndex;
 
   MathsPuzzle get puzzle => _puzzle;
 
@@ -93,6 +96,7 @@ class MathsGameViewModel extends BaseViewModel {
   // Methods:
   void initialize() {
     _score = _localStorage.score[Game.maths.index];
+    _puzzleIndex = 0;
     updatePuzzle();
 
     Timer.periodic(
@@ -105,9 +109,9 @@ class MathsGameViewModel extends BaseViewModel {
   }
 
   void updatePuzzle() {
-    if (_score < mathsPuzzles.length) {
-      _puzzle = mathsPuzzles[_score];
-    } else if (_score == mathsPuzzles.length && kDebugMode) {
+    if (_puzzleIndex < mathsPuzzles.length) {
+      _puzzle = mathsPuzzles[_puzzleIndex];
+    } else if (_puzzleIndex == mathsPuzzles.length && kDebugMode) {
       _puzzle = const MathsPuzzle(
         equation: 'END OF PRE # DEFINED PUZZLES',
         solution: ['/'],
@@ -137,10 +141,12 @@ class MathsGameViewModel extends BaseViewModel {
       if (listEquals(_currentInput, _puzzle.solution)) {
         _feedbackType = FeedbackType.positive;
         _feedbackText = 'yes';
+        _puzzleIndex++;
         score++;
       } else {
         _feedbackType = FeedbackType.negative;
         _feedbackText = 'no';
+        // INFO: Does not reset `puzzleIndex`.
         score = 0;
       }
 
