@@ -59,14 +59,14 @@ class MathsGame extends StatelessWidget {
     );
   }
 
-  Expanded _buildBackground(MathsGameViewModel model) {
+  Positioned _buildBackground(MathsGameViewModel model) {
     if (!model.showHelp) {
-      return Expanded(
+      return Positioned.fill(
         child: Container(),
       );
     }
 
-    return Expanded(
+    return Positioned.fill(
       child: TapDebouncer(
         onTap: () async {
           model.showHelp = false;
