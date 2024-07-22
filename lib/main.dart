@@ -19,7 +19,7 @@ Future<void> main() async {
   }
 
   // Fullscreen
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   // Set up singleton provider.
   await setupLocator();
