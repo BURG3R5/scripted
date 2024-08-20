@@ -262,5 +262,21 @@ const mathsPuzzles = <MathsPuzzle>[
   MathsPuzzle(equation: '142 // ? = ??4', solution: ['2', '3', '3']),
   MathsPuzzle(equation: '23 // 44 = 2??2', solution: ['2', '2']),
   // endregion
+  // region divide
+  MathsPuzzle(equation: r'1 \\ 1 = ?', solution: ['1']),
+  MathsPuzzle(equation: r'4 \\ 2 = ?', solution: ['2']),
+  MathsPuzzle(equation: r'14 \\ 3 = ?', solution: ['3']),
+  MathsPuzzle(equation: r'13 \\ ? = 2', solution: ['4']),
+  MathsPuzzle(equation: r'? \\ 312 = 0', solution: ['0']),
+  MathsPuzzle(equation: r'40 \\ 2 = ??', solution: ['2', '0']),
+  // endregion
+  // region long
+  MathsPuzzle(equation: r'303 \\ 11 = ??', solution: ['2', '3']),
+  MathsPuzzle(equation: r'121 \\ ? = 22', solution: ['3']),
+  MathsPuzzle(equation: r'134 \\ 2 = ??', solution: ['4', '2']),
+  MathsPuzzle(equation: r'1001 \\ 2 = ???', solution: ['2', '2', '3']),
+  MathsPuzzle(equation: r'413 \\ ?? = 22', solution: ['1', '4']),
+  MathsPuzzle(equation: r'?? \\ 2 = 102 \\ 3', solution: ['3', '3']),
+  // endregion
   // TODO: Add more puzzles
 ];
