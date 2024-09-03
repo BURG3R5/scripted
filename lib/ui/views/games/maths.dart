@@ -36,7 +36,10 @@ class MathsGame extends StatelessWidget {
                 ),
                 HelpWidget(
                   containerWidth: 190,
-                  containerHeight: 190,
+                  containerHeight: model.showUnlockCheat ? 240 : null,
+                  containerPadding: model.showUnlockCheat
+                      ? null
+                      : const EdgeInsets.symmetric(vertical: 10),
                   onPressed: model.onHelpTap,
                   showExpanded: model.showHelp,
                   cheatCodes: [

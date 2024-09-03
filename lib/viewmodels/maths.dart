@@ -37,8 +37,10 @@ class MathsGameViewModel extends BaseViewModel {
     CheatInput.help,
     CheatInput.help,
     CheatInput.score(33),
-    CheatInput.score(33),
     CheatInput.help,
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.score(33),
     CheatInput.score(33),
   ];
   static const unlockCheatDebug = <CheatInput>[
@@ -189,7 +191,10 @@ class MathsGameViewModel extends BaseViewModel {
         (kDebugMode && _cheatInput.endsWith(unlockCheatDebug))) {
       log('Cheat activated: UNLOCK');
       _cheatInput.add(const CheatInput.score(-1));
-      // TODO: Unlock next game/app.
+      _localStorage.hasUnlockedGame3 = true;
+
+      notifyListeners();
+      Future.delayed(const Duration(milliseconds: 100), Get.back);
     }
   }
 }
