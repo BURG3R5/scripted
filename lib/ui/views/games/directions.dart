@@ -125,7 +125,10 @@ class DirectionsGame extends StatelessWidget {
                 child: TapDebouncer(
                   onTap: () async =>
                       await model.onInput((rowIndex, columnIndex)),
-                  builder: (_, onTap) => InkWell(onTap: onTap),
+                  builder: (_, onTap) => InkWell(
+                    onTap: onTap,
+                    hoverColor: Colors.transparent,
+                  ),
                 ),
               ),
             ),
