@@ -4,7 +4,9 @@ import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 import '../theme.dart';
 
 class Credits extends StatelessWidget {
-  const Credits({super.key});
+  const Credits({this.isTheEnd = false, super.key});
+
+  final bool isTheEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,13 @@ class Credits extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
         child: ScrollLoopAutoScroll(
           gap: 200,
+          // TODO: Adjust speed based on `isTheEnd`
           duration: const Duration(minutes: 4),
           scrollDirection: Axis.vertical,
           child: Column(
             children: <RichText>[
               _buildDevelopersNote(context),
+              if (isTheEnd) _buildEndOfContentNote(context),
               _buildCredits(context),
             ],
           ),
@@ -70,7 +74,29 @@ class Credits extends StatelessWidget {
             text: ". It's an ode to games that do not hold "
                 'your hands, whose worlds keep spinning with '
                 'or without you. Games that are not meant for '
-                'players.\n\n\n\n\n\n\n',
+                'players.\n\n\n',
+          ),
+        ],
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      textAlign: TextAlign.justify,
+    );
+  }
+
+  RichText _buildEndOfContentNote(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: const <InlineSpan>[
+          TextSpan(
+            text: 'You have reached the end of the currently released '
+                'content. There is more stuff to come, but it will happen in '
+                'random bursts. You can Star the GitHub repository to receive '
+                'updates about releases, or just check the app marketplace in a '
+                'couple of months.\n\n',
+          ),
+          TextSpan(
+            text: 'Thanks for playing!\n\n\n\n\n\n\n',
+            style: TextStyle(color: primary),
           ),
         ],
         style: Theme.of(context).textTheme.titleLarge,

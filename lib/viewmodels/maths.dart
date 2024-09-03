@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:developer' show log;
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../constants/enums/feedback_type.dart';
 import '../constants/enums/game.dart';
 import '../constants/predefined_puzzles.dart';
+import '../constants/strings.dart';
 import '../core/locator.dart';
+import '../core/router.dart';
 import '../models/cheat_input.dart';
 import '../models/maths_puzzle.dart';
 import '../services/local_storage.dart';
@@ -116,6 +119,9 @@ class MathsGameViewModel extends BaseViewModel {
         equation: 'END OF PRE # DEFINED PUZZLES',
         solution: ['/'],
       );
+        log('Reached end of content');
+        Get.offAndToNamed(AppRoutes.credits, arguments: isTheEnd);
+        return;
     } else {
       _puzzle = MathsPuzzle.random();
     }
