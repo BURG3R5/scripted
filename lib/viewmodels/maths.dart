@@ -54,18 +54,17 @@ class MathsGameViewModel extends BaseViewModel {
   // Data:
   late int _score;
   late int _puzzleIndex;
+  late int _levelIndex;
   var _puzzle = MathsPuzzle.empty;
   var _feedbackType = FeedbackType.positive;
   String? _feedbackText;
   var _showHelp = false;
-  var _currentInput = <String>[];
   final _cheatInput = <CheatInput>[];
+  var _currentInput = <String>[];
   bool _flashingInputFlag = true;
 
   // Getters:
   int get score => _score;
-
-  int get puzzleIndex => _puzzleIndex;
 
   MathsPuzzle get puzzle => _puzzle;
 
@@ -75,9 +74,9 @@ class MathsGameViewModel extends BaseViewModel {
 
   bool get showHelp => _showHelp;
 
-  List<String> get currentInput => _currentInput;
-
   bool get showUnlockCheat => !_localStorage.hasUnlockedGame3;
+
+  List<String> get currentInput => _currentInput;
 
   bool get flashingInputFlag => _flashingInputFlag;
 
@@ -100,6 +99,7 @@ class MathsGameViewModel extends BaseViewModel {
   void initialize() {
     _score = _localStorage.score[Game.maths.index];
     _puzzleIndex = 0;
+    _levelIndex = _localStorage.level[Game.maths.index];
     updatePuzzle();
 
     Timer.periodic(
@@ -112,16 +112,23 @@ class MathsGameViewModel extends BaseViewModel {
   }
 
   void updatePuzzle() {
-    if (_puzzleIndex < mathsPuzzles.length) {
-      _puzzle = mathsPuzzles[_puzzleIndex];
-    } else if (_puzzleIndex == mathsPuzzles.length && kDebugMode) {
-      _puzzle = const MathsPuzzle(
-        equation: 'END OF PRE # DEFINED PUZZLES',
-        solution: ['/'],
-      );
+    if (_levelIndex == 0) {
+      if (_puzzleIndex < mathsPuzzles.length) {
+        _puzzle = mathsPuzzles[_puzzleIndex];
+      } else {
+        _puzzle = MathsPuzzle.random();
+      }
+
+      if (_puzzleIndex == mathsPuzzles.length + 5) {
+        _localStorage.setGameLevel(
+          game: Game.maths,
+          newLevel: 1,
+        );
+        log('Reached level 1');
         log('Reached end of content');
         Get.offAndToNamed(AppRoutes.credits, arguments: isTheEnd);
         return;
+      }
     } else {
       _puzzle = MathsPuzzle.random();
     }
@@ -152,7 +159,6 @@ class MathsGameViewModel extends BaseViewModel {
       } else {
         _feedbackType = FeedbackType.negative;
         _feedbackText = 'no';
-        // INFO: Does not reset `puzzleIndex`.
         score = 0;
       }
 

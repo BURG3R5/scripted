@@ -48,6 +48,8 @@ class DirectionsGameViewModel extends BaseViewModel {
 
   // Data:
   late int _score;
+  late int _puzzleIndex;
+  late int _levelIndex;
   var _puzzle = DirectionsPuzzle.empty;
   var _feedbackType = FeedbackType.positive;
   String? _feedbackText;
@@ -85,20 +87,26 @@ class DirectionsGameViewModel extends BaseViewModel {
   // Methods:
   void initialize() {
     _score = _localStorage.score[Game.directions.index];
+    _puzzleIndex = 0;
+    _levelIndex = _localStorage.level[Game.maths.index];
     updatePuzzle();
   }
 
   void updatePuzzle() {
-    if (_score < directionsPuzzles.length) {
-      _puzzle = directionsPuzzles[_score];
-    } else if (_score == directionsPuzzles.length && kDebugMode) {
-      _puzzle = const DirectionsPuzzle(
-        instructions: [
-          DirectionsGameInstruction(text: 'END OF PRE-DEFINED PUZZLES')
-        ],
-        solution: (0, 0),
-        partitions: (1, 1),
-      );
+    if (_levelIndex == 0) {
+      if (_puzzleIndex < directionsPuzzles.length) {
+        _puzzle = directionsPuzzles[_puzzleIndex];
+      } else {
+        _puzzle = DirectionsPuzzle.random();
+      }
+
+      if (_puzzleIndex == directionsPuzzles.length + 5) {
+        _localStorage.setGameLevel(
+          game: Game.maths,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+      }
     } else {
       _puzzle = DirectionsPuzzle.random();
     }
@@ -119,6 +127,7 @@ class DirectionsGameViewModel extends BaseViewModel {
     if (tapLocation == _puzzle.solution) {
       _feedbackType = FeedbackType.positive;
       _feedbackText = 'yes';
+      _puzzleIndex++;
       score++;
     } else {
       _feedbackType = FeedbackType.negative;
