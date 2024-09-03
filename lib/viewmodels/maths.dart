@@ -20,32 +20,32 @@ class MathsGameViewModel extends BaseViewModel {
   // Constants:
   static const flashingDuration = Duration(milliseconds: 700);
 
-  static const bonusCheat = <CheatInput>[
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.score(111),
-    CheatInput.score(111),
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.score(19),
-    CheatInput.score(19),
-    CheatInput.score(19),
-  ];
-  static const bonusCheatDebug = <CheatInput>[
-    CheatInput.score(2),
-  ];
   static const unlockCheat = <CheatInput>[
     CheatInput.help,
     CheatInput.help,
     CheatInput.score(51),
     CheatInput.score(51),
     CheatInput.score(51),
-    // TODO: Make the unlock cheat difficult to understand
+  ];
+  static const bonusCheat = <CheatInput>[
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.score(19),
+    CheatInput.score(19),
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.score(33),
+    CheatInput.score(33),
+    CheatInput.help,
+    CheatInput.score(33),
   ];
   static const unlockCheatDebug = <CheatInput>[
     CheatInput.score(1),
+  ];
+  static const bonusCheatDebug = <CheatInput>[
+    CheatInput.score(2),
   ];
 
   // Services:
