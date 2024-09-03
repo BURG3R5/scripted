@@ -47,7 +47,12 @@ class Menu extends StatelessWidget {
                           enabled: true,
                           icon: FontAwesomeIcons.waveSquare,
                         ),
-                        _buildMenuItem(context, enabled: false),
+                        _buildMenuItem(
+                          context,
+                          title: 'communication',
+                          enabled: false,
+                          icon: FontAwesomeIcons.stream,
+                        ), // TODO: Enable according to value in LocalStorage
                         _buildMenuItem(context, enabled: false),
                       ],
                     ),

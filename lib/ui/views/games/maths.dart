@@ -44,8 +44,8 @@ class MathsGame extends StatelessWidget {
                   showExpanded: model.showHelp,
                   cheatCodes: [
                     if (model.showUnlockCheat)
-                      (FontAwesomeIcons.unlock, MathsGameViewModel.unlockCheat),
-                    (Icons.card_giftcard, MathsGameViewModel.bonusCheat),
+                      (FontAwesomeIcons.stream, MathsGameViewModel.unlockCheat),
+                    (FontAwesomeIcons.bolt, MathsGameViewModel.bonusCheat),
                   ],
                 ),
                 if (model.feedbackText != null)

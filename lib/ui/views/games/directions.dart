@@ -1,3 +1,4 @@
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:double_tap_exit/double_tap_exit.dart';
 import 'package:flutter/material.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -57,8 +58,14 @@ class DirectionsGame extends StatelessWidget {
                     showExpanded: model.showHelp,
                     cheatCodes: [
                       if (model.showExitCheat)
-                        (Icons.exit_to_app, DirectionsGameViewModel.exitCheat),
-                      (Icons.card_giftcard, DirectionsGameViewModel.bonusCheat),
+                        (
+                          FontAwesomeIcons.solidShareSquare,
+                          DirectionsGameViewModel.exitCheat
+                        ),
+                      (
+                        FontAwesomeIcons.bolt,
+                        DirectionsGameViewModel.bonusCheat
+                      ),
                     ],
                   ),
                   if (model.feedbackText != null)
