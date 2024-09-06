@@ -11,10 +11,12 @@ const Color chantsOfSennaarColor = Color(0xFFD02D57);
 const Color outerWildsColor = Color(0xFFF09225);
 const Color loreleiAndTheLaserEyesColor = Color(0xFFD63BC5);
 const Color taijiColor = Color(0xFFACBD3B);
+const Color githubColor = Color(0xFF3EC856);
 const Color fontStructColor = Color(0xFFFFDE01);
 const Color redditColor = Color(0xFFFF4500);
 const Color musaColor = Color(0xFFF7F385);
 const Color fontAwesomeColor = Color(0xFFFAB005);
+const Color freeSoundColor = Color(0xFFFF3546);
 const Color flutterColor = Color(0xFF5FC9F8);
 
 final appTheme = ThemeData.from(
