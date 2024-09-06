@@ -10,8 +10,5 @@ class AudioService {
     await ambiencePlayer.setSourceAsset(AppAssets.ambientSound);
     await ambiencePlayer.setReleaseMode(ReleaseMode.loop);
     ambiencePlayer.resume();
-
-    // TODO: Variation? Gap-less? Blending of finish into start?
-    // TODO: Audio feedback on unlocks? solves? taps?
   }
 }
