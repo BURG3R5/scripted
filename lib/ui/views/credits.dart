@@ -11,8 +11,6 @@ class Credits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: See if I can add a glitchy effect over everything
-
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
