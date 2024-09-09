@@ -88,7 +88,7 @@ class DirectionsGameViewModel extends BaseViewModel {
   void initialize() {
     _score = _localStorage.score[Game.directions.index];
     _puzzleIndex = 0;
-    _levelIndex = _localStorage.level[Game.maths.index];
+    _levelIndex = _localStorage.level[Game.directions.index];
     updatePuzzle();
   }
 
@@ -102,7 +102,7 @@ class DirectionsGameViewModel extends BaseViewModel {
 
       if (_puzzleIndex == directionsPuzzles.length + 5) {
         _localStorage.setGameLevel(
-          game: Game.maths,
+          game: Game.directions,
           newLevel: 1,
         );
         log('Reached level 1');
@@ -158,7 +158,7 @@ class DirectionsGameViewModel extends BaseViewModel {
       _cheatInput.add(const CheatInput.score(-1));
       _localStorage.hasUnlockedMenu = true;
       _localStorage.setGameLevel(
-        game: Game.maths,
+        game: Game.directions,
         newLevel: 1,
       );
       log('Reached level 1');
