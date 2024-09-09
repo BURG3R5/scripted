@@ -157,6 +157,11 @@ class DirectionsGameViewModel extends BaseViewModel {
       log('Cheat activated: EXIT');
       _cheatInput.add(const CheatInput.score(-1));
       _localStorage.hasUnlockedMenu = true;
+      _localStorage.setGameLevel(
+        game: Game.maths,
+        newLevel: 1,
+      );
+      log('Reached level 1');
 
       notifyListeners();
       Future.delayed(const Duration(milliseconds: 100), Get.back);
