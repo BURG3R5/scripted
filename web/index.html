@@ -18,48 +18,52 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <style>
-  .body {
-    overflow: hidden;
+  body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
   }
 
   .container {
     width: 100vw;
     height: 100vh;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     flex: auto;
     flex-direction: column;
-}
+    transition: opacity 0.4s ease-out;
+  }
 
-.indicator {
+  .indicator {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 15px;
+  }
+
+  .progress-bar {
     width: 100px;
-    height: 100px;
-    margin-bottom: 15px;
-}
-
-.progress-bar {
-  width: 100px;
-  border-radius: 4px;
-}
-
-@keyframes progress {
-  0% {
-    width: 25%;
+    border-radius: 4px;
   }
-  100% {
-    width: 100%;
-  }
-}
 
-.progress-bar-fill {
-  display: block;
-  height: 5px;
-  background-color: #7c70ff;
-  border-radius: 4px;
-  transition: width 0.2s ease-in;
-  animation: progress 5s ease-in-out forwards;
-}
+  @keyframes progress {
+    0% {
+      width: 25%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  .progress-bar-fill {
+    display: block;
+    height: 5px;
+    background-color: #7c70ff;
+    border-radius: 4px;
+    transition: width 0.2s ease-in;
+    animation: progress 5s ease-in-out forwards;
+  }
 </style>
 <body>
   <div id="loading_indicator" class="container">
@@ -68,6 +72,20 @@
       <div class="progress-bar-fill" style="width: 50%;"></div>
     </div>
 </div>
+  <script>
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    window.addEventListener('load', function (ev) {
+      var loaderContent = document.querySelector('#loading_indicator');
+      engineInitializer.initializeEngine().then(async function (appRunner) {
+        loaderContent.style.opacity = "0";
+        await delay(400);
+        await appRunner.runApp();
+      });
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
   <script>
     window.onload = function() {
