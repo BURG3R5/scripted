@@ -35,10 +35,10 @@ class Credits extends StatelessWidget {
       text: TextSpan(
         children: const <TextSpan>[
           TextSpan(
-            text: '\n\n\n\n\n\n\nSCRIPTED',
+            text: '\n\n\n\n\n\n\nScripted',
             style: TextStyle(color: primary),
           ),
-          TextSpan(text: ' is an artpiece in the form of a video game.'),
+          TextSpan(text: ' is an art-piece in the form of a video game.'),
           TextSpan(
             text: '\n\n\n\n\n\n\n\nIt\'s inspired by the contextual learning '
                 'and knowledge-based unlocks of games like ',
@@ -53,7 +53,7 @@ class Credits extends StatelessWidget {
             style: TextStyle(color: outerWildsColor),
           ),
           TextSpan(
-            text: ', and the "You\'ll need a notebook" design '
+            text: ', and the "Bring out a pen and paper" design '
                 'philosophy of games like ',
           ),
           TextSpan(
@@ -69,7 +69,7 @@ class Credits extends StatelessWidget {
           ),
           TextSpan(
             text: ". It's an ode to games that do not hold "
-                'your hands, whose worlds keep spinning with '
+                'your hand, whose worlds keep spinning with '
                 'or without you. Games that are not meant for '
                 'players.',
           ),
@@ -87,8 +87,8 @@ class Credits extends StatelessWidget {
           TextSpan(
             text: '\n\n\n\nYou have reached the end of the currently released '
                 'content. There is more stuff to come, but it will happen in '
-                'random bursts. You can Star the GitHub repository to receive '
-                'updates about releases, or just check the app marketplace in a '
+                'random bursts. You can follow me on Itch to receive updates '
+                'about releases, or just check the page marketplace in a '
                 'couple of months.',
           ),
         ],
@@ -140,9 +140,24 @@ class Credits extends StatelessWidget {
             style: TextStyle(color: freeSoundColor),
           ),
           const TextSpan(text: 'Flutter & Dart packages\n'),
+          const TextSpan(text: 'audioplayers - '),
+          const TextSpan(
+            text: 'blue-fire.xyz\n',
+            style: TextStyle(color: flutterColor),
+          ),
           const TextSpan(text: 'awesome_icons - '),
           const TextSpan(
             text: 'appcheap.io\n',
+            style: TextStyle(color: flutterColor),
+          ),
+          const TextSpan(text: 'double_tap_exit - '),
+          const TextSpan(
+            text: 'zaidk22\n',
+            style: TextStyle(color: flutterColor),
+          ),
+          const TextSpan(text: 'flutter_launcher_icons - '),
+          const TextSpan(
+            text: 'fluttercommunity.dev\n',
             style: TextStyle(color: flutterColor),
           ),
           const TextSpan(text: 'get - '),
@@ -158,6 +173,11 @@ class Credits extends StatelessWidget {
           const TextSpan(text: 'glowy_borders - '),
           const TextSpan(
             text: 'inferialize.com\n',
+            style: TextStyle(color: flutterColor),
+          ),
+          const TextSpan(text: 'pie_menu - '),
+          const TextSpan(
+            text: 'rasitayaz\n',
             style: TextStyle(color: flutterColor),
           ),
           const TextSpan(text: 'provider - '),
