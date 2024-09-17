@@ -88,8 +88,7 @@ class Credits extends StatelessWidget {
             text: '\n\n\n\nYou have reached the end of the currently released '
                 'content. There is more stuff to come, but it will happen in '
                 'random bursts. You can follow me on Itch to receive updates '
-                'about releases, or just check the page marketplace in a '
-                'couple of months.',
+                'about releases, or just check the page in a couple of months.',
           ),
         ],
         style: Theme.of(context).textTheme.titleLarge,
