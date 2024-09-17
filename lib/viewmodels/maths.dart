@@ -78,6 +78,8 @@ class MathsGameViewModel extends BaseViewModel {
 
   bool get showUtilityCheat => !_localStorage.hasUnlockedGame3;
 
+  bool get showBackButton => kIsWeb && (_levelIndex != 0);
+
   List<String> get currentInput => _currentInput;
 
   bool get flashingInputFlag => _flashingInputFlag;

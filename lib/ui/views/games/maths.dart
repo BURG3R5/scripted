@@ -7,6 +7,7 @@ import 'package:tap_debouncer/tap_debouncer.dart';
 import '../../../constants/enums/operation.dart';
 import '../../../models/cheat_input.dart';
 import '../../../viewmodels/maths.dart';
+import '../../components/back.dart';
 import '../../components/feedback.dart';
 import '../../components/glow_text.dart';
 import '../../components/help.dart';
@@ -51,6 +52,7 @@ class MathsGame extends StatelessWidget {
                     (FontAwesomeIcons.bolt, MathsGameViewModel.bonusCheat),
                   ],
                 ),
+                if (model.showBackButton) const MyBackButton(),
                 if (model.feedbackText != null)
                   ...buildFeedbackWidgets(
                     context,

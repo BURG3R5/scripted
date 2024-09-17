@@ -6,6 +6,7 @@ import 'package:tap_debouncer/tap_debouncer.dart';
 import '../../../models/cheat_input.dart';
 import '../../../models/directions_puzzle.dart';
 import '../../../viewmodels/directions.dart';
+import '../../components/back.dart';
 import '../../components/conditionally_wrap.dart';
 import '../../components/feedback.dart';
 import '../../components/glow_text.dart';
@@ -68,6 +69,7 @@ class DirectionsGame extends StatelessWidget {
                       ),
                     ],
                   ),
+                  if (model.showBackButton) const MyBackButton(),
                   if (model.feedbackText != null)
                     ...buildFeedbackWidgets(
                       context,

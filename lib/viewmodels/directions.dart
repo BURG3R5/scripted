@@ -69,6 +69,8 @@ class DirectionsGameViewModel extends BaseViewModel {
 
   bool get showUtilityCheat => !_localStorage.hasUnlockedMenu;
 
+  bool get showBackButton => kIsWeb && (_levelIndex != 0);
+
   // Setters:
   set score(int newScore) {
     _score = newScore;
