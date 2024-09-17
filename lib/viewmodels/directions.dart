@@ -15,7 +15,7 @@ import 'base.dart';
 
 class DirectionsGameViewModel extends BaseViewModel {
   // Constants:
-  static const exitCheat = <CheatInput>[
+  static const utilityCheat = <CheatInput>[
     CheatInput.score(21),
     CheatInput.score(21),
     CheatInput.score(21),
@@ -36,7 +36,7 @@ class DirectionsGameViewModel extends BaseViewModel {
     CheatInput.score(28),
     CheatInput.score(28),
   ];
-  static const exitCheatDebug = <CheatInput>[
+  static const utilityCheatDebug = <CheatInput>[
     CheatInput.score(1),
   ];
   static const bonusCheatDebug = <CheatInput>[
@@ -67,7 +67,7 @@ class DirectionsGameViewModel extends BaseViewModel {
 
   bool get showHelp => _showHelp;
 
-  bool get showExitCheat => !_localStorage.hasUnlockedMenu;
+  bool get showUtilityCheat => !_localStorage.hasUnlockedMenu;
 
   // Setters:
   set score(int newScore) {
@@ -152,16 +152,18 @@ class DirectionsGameViewModel extends BaseViewModel {
     log('Pressed: $input');
     _cheatInput.add(input);
 
-    if (_cheatInput.endsWith(exitCheat) ||
-        (kDebugMode && _cheatInput.endsWith(exitCheatDebug))) {
-      log('Cheat activated: EXIT');
+    if (_cheatInput.endsWith(utilityCheat) ||
+        (kDebugMode && _cheatInput.endsWith(utilityCheatDebug))) {
+      log('Cheat activated: UTILITY (UNLOCK MENU and EXIT)');
       _cheatInput.add(const CheatInput.score(-1));
-      _localStorage.hasUnlockedMenu = true;
-      _localStorage.setGameLevel(
-        game: Game.directions,
-        newLevel: 1,
-      );
-      log('Reached level 1');
+      if (!_localStorage.hasUnlockedMenu) {
+        _localStorage.hasUnlockedMenu = true;
+        _localStorage.setGameLevel(
+          game: Game.directions,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+      }
 
       notifyListeners();
       Future.delayed(const Duration(milliseconds: 100), Get.back);

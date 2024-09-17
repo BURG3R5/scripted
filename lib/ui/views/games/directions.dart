@@ -25,9 +25,9 @@ class DirectionsGame extends StatelessWidget {
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
         return ConditionallyWrap(
-          condition: !popsToMenu && model.showExitCheat,
+          condition: !popsToMenu && model.showUtilityCheat,
           parentBuilder: (child) => DoubleTap(
-            message: 'YOU ARE LOCKED INTO THE DIRECTIONS GAME\n'
+            message: 'YOU ARE LOCKED INSIDE THE DIRECTIONS ACTIVITY\n'
                 'PRESS BACK TWICE TO EXIT THE APP ENTIRELY',
             child: child,
           ),
@@ -50,17 +50,17 @@ class DirectionsGame extends StatelessWidget {
                   ),
                   HelpWidget(
                     containerWidth: 190,
-                    containerHeight: model.showExitCheat ? 190 : null,
-                    containerPadding: model.showExitCheat
+                    containerHeight: model.showUtilityCheat ? 190 : null,
+                    containerPadding: model.showUtilityCheat
                         ? null
                         : const EdgeInsets.symmetric(vertical: 10),
                     onPressed: model.onHelpTap,
                     showExpanded: model.showHelp,
                     cheatCodes: [
-                      if (model.showExitCheat)
+                      if (model.showUtilityCheat)
                         (
                           FontAwesomeIcons.solidShareSquare,
-                          DirectionsGameViewModel.exitCheat
+                          DirectionsGameViewModel.utilityCheat
                         ),
                       (
                         FontAwesomeIcons.bolt,

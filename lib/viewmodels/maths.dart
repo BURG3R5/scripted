@@ -20,7 +20,7 @@ class MathsGameViewModel extends BaseViewModel {
   // Constants:
   static const flashingDuration = Duration(milliseconds: 700);
 
-  static const unlockCheat = <CheatInput>[
+  static const utilityCheat = <CheatInput>[
     CheatInput.help,
     CheatInput.help,
     CheatInput.score(51),
@@ -43,7 +43,7 @@ class MathsGameViewModel extends BaseViewModel {
     CheatInput.score(33),
     CheatInput.score(33),
   ];
-  static const unlockCheatDebug = <CheatInput>[
+  static const utilityCheatDebug = <CheatInput>[
     CheatInput.score(1),
   ];
   static const bonusCheatDebug = <CheatInput>[
@@ -76,7 +76,7 @@ class MathsGameViewModel extends BaseViewModel {
 
   bool get showHelp => _showHelp;
 
-  bool get showUnlockCheat => !_localStorage.hasUnlockedGame3;
+  bool get showUtilityCheat => !_localStorage.hasUnlockedGame3;
 
   List<String> get currentInput => _currentInput;
 
@@ -182,19 +182,26 @@ class MathsGameViewModel extends BaseViewModel {
     log('Pressed: $input');
     _cheatInput.add(input);
 
-    if (_cheatInput.endsWith(bonusCheat) ||
+    if (_cheatInput.endsWith(utilityCheat) ||
+        (kDebugMode && _cheatInput.endsWith(utilityCheatDebug))) {
+      log('Cheat activated: UTILITY (UNLOCK GAME 3 and EXIT)');
+      _cheatInput.add(const CheatInput.score(-1));
+      if (!_localStorage.hasUnlockedGame3) {
+        _localStorage.hasUnlockedGame3 = true;
+        _localStorage.setGameLevel(
+          game: Game.maths,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+      }
+
+      notifyListeners();
+      Future.delayed(const Duration(milliseconds: 100), Get.back);
+    } else if (_cheatInput.endsWith(bonusCheat) ||
         (kDebugMode && _cheatInput.endsWith(bonusCheatDebug))) {
       log('Cheat activated: BONUS');
       _cheatInput.add(const CheatInput.score(-1));
       score += 500;
-    } else if (_cheatInput.endsWith(unlockCheat) ||
-        (kDebugMode && _cheatInput.endsWith(unlockCheatDebug))) {
-      log('Cheat activated: UNLOCK');
-      _cheatInput.add(const CheatInput.score(-1));
-      _localStorage.hasUnlockedGame3 = true;
-
-      notifyListeners();
-      Future.delayed(const Duration(milliseconds: 100), Get.back);
     }
   }
 }
