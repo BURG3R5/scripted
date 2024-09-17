@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-const Color primary = Color(0xFF7C70FF);
-const Color secondary = Color(0xFFEB6FB2);
-const Color tertiary = Color(0xFF63BF76);
-const Color white = Color(0xFFE0FDFF);
-const Color background = Colors.black;
+/// Color Palette: https://colorswall.com/palette/generate/7c70ff-eb6fb2-63bf76-ffad7d-e0fdff-000000
+const Color primary = Color(0xFF7C70FF),
+    secondary = Color(0xFFEB6FB2),
+    tertiary = Color(0xFF63BF76),
+    white = Color(0xFFE0FDFF),
+    black = Colors.black;
 
 // Brand colors
 const Color chantsOfSennaarColor = Color(0xFFD02D57);
@@ -22,12 +23,15 @@ const Color flutterColor = Color(0xFF5FC9F8);
 final appTheme = ThemeData.from(
   colorScheme: ColorScheme.fromSeed(
     seedColor: primary,
-    onPrimary: Colors.black,
     brightness: Brightness.dark,
-    surface: background,
+    primary: primary,
+    onPrimary: black,
+    surface: black,
     onSurface: primary,
     secondary: secondary,
-    onSecondary: Colors.black,
+    onSecondary: black,
+    tertiary: tertiary,
+    onTertiary: black,
   ),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(fontFamily: 'GridMandrillMusa'),

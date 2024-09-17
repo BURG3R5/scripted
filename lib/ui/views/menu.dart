@@ -112,7 +112,7 @@ class Menu extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: background,
+              color: black,
             ),
             alignment: Alignment.center,
             child: Column(

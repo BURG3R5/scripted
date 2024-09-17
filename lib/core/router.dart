@@ -50,7 +50,7 @@ class AppRouter {
       default:
         return GetPageRoute(
           page: () => Scaffold(
-            backgroundColor: background,
+            backgroundColor: black,
             body: Center(
               child: Text('no route defined for ${settings.name}'),
             ),

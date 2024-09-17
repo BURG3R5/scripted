@@ -144,11 +144,11 @@ class MathsGame extends StatelessWidget {
       theme: PieTheme(
         customAngleDiff: 360 / 5,
         buttonTheme: const PieButtonTheme(
-          backgroundColor: background,
+          backgroundColor: black,
           iconColor: null,
         ),
         buttonThemeHovered: PieButtonTheme(
-          backgroundColor: Color.lerp(background, primary, 0.33),
+          backgroundColor: Color.lerp(black, primary, 0.33),
           iconColor: null,
         ),
         delayDuration: Duration.zero,

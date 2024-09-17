@@ -17,7 +17,7 @@ List<Widget> buildFeedbackWidgets(
   return <Widget>[
     Container(
       alignment: Alignment.center,
-      color: background.withOpacity(0.5),
+      color: black.withOpacity(0.5),
       child: Icon(
         icon,
         color: Color.lerp(white, color, 0.5),
@@ -27,7 +27,7 @@ List<Widget> buildFeedbackWidgets(
     Center(
       child: GlowText(
         text: feedbackText,
-        glowColor: background,
+        glowColor: black,
         style: Theme.of(context)
             .textTheme
             .displaySmall

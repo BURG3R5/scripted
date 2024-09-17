@@ -26,7 +26,7 @@ class ScoreWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: background,
+          color: black,
         ),
         height: 30,
         padding: const EdgeInsets.symmetric(horizontal: 10),

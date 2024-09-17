@@ -51,7 +51,7 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
   Widget build(BuildContext context) {
     if (context.isPortrait) {
       return Scaffold(
-        backgroundColor: background,
+        backgroundColor: black,
         body: Center(
           child: Text(
             'Scripted works best in landscape orientation\n'

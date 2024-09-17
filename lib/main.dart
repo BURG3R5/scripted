@@ -48,7 +48,7 @@ class Scripted extends StatelessWidget {
     //Set notification bar color.
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: background,
+        statusBarColor: black,
       ),
     );
 
