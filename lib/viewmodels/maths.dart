@@ -23,9 +23,9 @@ class MathsGameViewModel extends BaseViewModel {
   static const utilityCheat = <CheatInput>[
     CheatInput.help,
     CheatInput.help,
-    CheatInput.score(51),
-    CheatInput.score(51),
-    CheatInput.score(51),
+    CheatInput.score(38),
+    CheatInput.score(38),
+    CheatInput.score(38),
   ];
   static const bonusCheat = <CheatInput>[
     CheatInput.help,
@@ -36,12 +36,12 @@ class MathsGameViewModel extends BaseViewModel {
     CheatInput.score(19),
     CheatInput.help,
     CheatInput.help,
-    CheatInput.score(33),
+    CheatInput.score(51),
     CheatInput.help,
     CheatInput.help,
     CheatInput.help,
-    CheatInput.score(33),
-    CheatInput.score(33),
+    CheatInput.score(51),
+    CheatInput.score(51),
   ];
   static const utilityCheatDebug = <CheatInput>[
     CheatInput.score(1),

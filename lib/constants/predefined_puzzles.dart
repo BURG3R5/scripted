@@ -214,84 +214,52 @@ const directionsPuzzles = <DirectionsPuzzle>[
 ];
 
 const mathsPuzzles = <MathsPuzzle>[
-  // region add
+  // region addition, digits and base-5
   MathsPuzzle(equation: '0 / 0 = ?', solution: ['0']),
   MathsPuzzle(equation: '0 / 1 = ?', solution: ['1']),
   MathsPuzzle(equation: '1 / 1 = ?', solution: ['2']),
   MathsPuzzle(equation: '2 / 1 = ?', solution: ['3']),
   MathsPuzzle(equation: '2 / 2 = ?', solution: ['4']),
-  MathsPuzzle(equation: '1 / 0 = ?', solution: ['1']),
-  // endregion
-  // region carry
   MathsPuzzle(equation: '? / 4 = 10', solution: ['1']),
-  MathsPuzzle(equation: '3 / ? = 10', solution: ['2']),
   MathsPuzzle(equation: '44 / 23 = 1?2', solution: ['2']),
   MathsPuzzle(equation: '1? / ?4 = ?01', solution: ['2', '3', '1']),
-  MathsPuzzle(equation: '?4 / 1? = 42', solution: ['2', '3']),
-  MathsPuzzle(equation: '22 / 23 = 1??', solution: ['0', '0']),
   // endregion
-  // region subtract
+  // region subtraction
+  MathsPuzzle(equation: r'101 \ 101 = ?', solution: ['0']),
   MathsPuzzle(equation: r'2 \ 1 = ?', solution: ['1']),
   MathsPuzzle(equation: r'3 \ 1 = ?', solution: ['2']),
   MathsPuzzle(equation: r'10 \ 2 = ?', solution: ['3']),
   MathsPuzzle(equation: r'4 \ 0 = ?', solution: ['4']),
-  MathsPuzzle(equation: r'101 \ 100 = ?', solution: ['1']),
   MathsPuzzle(equation: r'34 \ 12 = ??', solution: ['2', '2']),
-  // endregion
-  // region borrow
-  MathsPuzzle(equation: r'13 \ 4 = ?', solution: ['4']),
-  MathsPuzzle(equation: r'31 \ ? = 24', solution: ['2']),
-  MathsPuzzle(equation: r'421 \ 124 = ???', solution: ['2', '4', '2']),
   MathsPuzzle(equation: r'1? \ 2 = ?4', solution: ['1', '0']),
-  MathsPuzzle(equation: r'1000 \ 101 = ???', solution: ['3', '4', '4']),
-  MathsPuzzle(equation: r'?0? \ ?0 = 223', solution: ['3', '3', '3']),
   // endregion
-  // region multiply
-  MathsPuzzle(equation: '4323 // 0 = ?', solution: ['0']),
+  // region multiplication
+  MathsPuzzle(equation: '423 // 0 = ?', solution: ['0']),
   MathsPuzzle(equation: '1 // 1 = ?', solution: ['1']),
   MathsPuzzle(equation: '2 // 1 = ?', solution: ['2']),
-  MathsPuzzle(equation: '3 // 2 = 1?', solution: ['1']),
-  MathsPuzzle(equation: '4 // 3 = ?2', solution: ['2']),
-  MathsPuzzle(equation: '2 // ? = 13', solution: ['4']),
-  // endregion
-  // region stack
-  MathsPuzzle(equation: '21 // 3 = ???', solution: ['1', '1', '3']),
   MathsPuzzle(equation: '? // 12 = 41', solution: ['3']),
+  MathsPuzzle(equation: '2 // ? = 13', solution: ['4']),
   MathsPuzzle(equation: '21 // 14 = ???', solution: ['3', '4', '4']),
   MathsPuzzle(equation: '? // 4 = 3?', solution: ['4', '1']),
-  MathsPuzzle(equation: '142 // ? = ??4', solution: ['2', '3', '3']),
-  MathsPuzzle(equation: '23 // 44 = 2??2', solution: ['2', '2']),
   // endregion
-  // region divide
-  MathsPuzzle(equation: r'1 \\ 1 = ?', solution: ['1']),
-  MathsPuzzle(equation: r'4 \\ 2 = ?', solution: ['2']),
-  MathsPuzzle(equation: r'14 \\ 3 = ?', solution: ['3']),
-  MathsPuzzle(equation: r'13 \\ ? = 2', solution: ['4']),
+  // region division
   MathsPuzzle(equation: r'? \\ 312 = 0', solution: ['0']),
-  MathsPuzzle(equation: r'40 \\ 2 = ??', solution: ['2', '0']),
-  // endregion
-  // region long
-  MathsPuzzle(equation: r'303 \\ 11 = ??', solution: ['2', '3']),
+  MathsPuzzle(equation: r'13 \\ 13 = ?', solution: ['1']),
+  MathsPuzzle(equation: r'40 \\ 2 = ?0', solution: ['2']),
   MathsPuzzle(equation: r'121 \\ ? = 22', solution: ['3']),
-  MathsPuzzle(equation: r'134 \\ 2 = ??', solution: ['4', '2']),
-  MathsPuzzle(equation: r'1001 \\ 2 = ???', solution: ['2', '2', '3']),
-  MathsPuzzle(equation: r'413 \\ ?? = 22', solution: ['1', '4']),
+  MathsPuzzle(equation: r'?13 \\ 14 = 22', solution: ['4']),
   MathsPuzzle(equation: r'?? \\ 2 = 102 \\ 3', solution: ['3', '3']),
   // endregion
-  // region signs
-  MathsPuzzle(equation: '1 # 312 = 1', solution: ['///']),
+  // region signs and exponentiation
   MathsPuzzle(equation: '1 # 1 = 2', solution: ['/']),
   MathsPuzzle(equation: '2 # 2 = 0', solution: [r'\']),
   MathsPuzzle(equation: '3 # 3 = 14', solution: ['//']),
   MathsPuzzle(equation: '4 # 4 = 1', solution: [r'\\']),
+  MathsPuzzle(equation: '1 # 312 = 1', solution: ['///']),
   MathsPuzzle(equation: '2 # 3 = 13', solution: ['///']),
-  // endregion
-  // region operations
   MathsPuzzle(equation: '13 # 32 = 100', solution: ['/']),
   MathsPuzzle(equation: '101 # 14 = 24', solution: [r'\\']),
-  MathsPuzzle(equation: '43 # 24 = 2242', solution: ['//']),
-  MathsPuzzle(equation: '2 # 10 = 112', solution: ['///']),
-  MathsPuzzle(equation: '34 # 2? = 12', solution: [r'\', '2']),
   MathsPuzzle(equation: '4 # 14 = 11 # 2', solution: ['//', '///']),
+  MathsPuzzle(equation: '34 # 2? = 12', solution: [r'\', '2']),
   // endregion
 ];
