@@ -1,4 +1,5 @@
 import 'package:awesome_icons/awesome_icons.dart';
+import 'package:double_tap_exit/double_tap_exit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pie_menu/pie_menu.dart';
@@ -8,6 +9,7 @@ import '../../../constants/enums/operation.dart';
 import '../../../models/cheat_input.dart';
 import '../../../viewmodels/maths.dart';
 import '../../components/back.dart';
+import '../../components/conditionally_wrap.dart';
 import '../../components/feedback.dart';
 import '../../components/glow_text.dart';
 import '../../components/help.dart';
@@ -23,43 +25,51 @@ class MathsGame extends StatelessWidget {
     return BaseView<MathsGameViewModel>(
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
-        return Scaffold(
-          body: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                _buildEquation(context, model),
-                _buildBackground(model),
-                ScoreWidget(
-                  score: model.score,
-                  onPressed: () =>
-                      model.addCheatInput(CheatInput.score(model.score)),
-                ),
-                HelpWidget(
-                  containerWidth: 190,
-                  containerHeight: model.showUtilityCheat ? 240 : null,
-                  containerPadding: model.showUtilityCheat
-                      ? null
-                      : const EdgeInsets.symmetric(vertical: 10),
-                  onPressed: model.onHelpTap,
-                  showExpanded: model.showHelp,
-                  cheatCodes: [
-                    if (model.showUtilityCheat)
-                      (
-                        FontAwesomeIcons.stream,
-                        MathsGameViewModel.utilityCheat
-                      ),
-                    (FontAwesomeIcons.bolt, MathsGameViewModel.bonusCheat),
-                  ],
-                ),
-                if (model.showBackButton) const MyBackButton(),
-                if (model.feedbackText != null)
-                  ...buildFeedbackWidgets(
-                    context,
-                    feedbackType: model.feedbackType,
-                    feedbackText: model.feedbackText!,
+        return ConditionallyWrap(
+          condition: model.showUtilityCheat,
+          parentBuilder: (child) => DoubleTap(
+            message: 'YOU ARE LOCKED INSIDE THE ARITHMETIC ACTIVITY\n'
+                'PRESS BACK TWICE TO EXIT THE APP ENTIRELY',
+            child: child,
+          ),
+          child: Scaffold(
+            body: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  _buildEquation(context, model),
+                  _buildBackground(model),
+                  ScoreWidget(
+                    score: model.score,
+                    onPressed: () =>
+                        model.addCheatInput(CheatInput.score(model.score)),
                   ),
-              ],
+                  HelpWidget(
+                    containerWidth: 190,
+                    containerHeight: model.showUtilityCheat ? 240 : null,
+                    containerPadding: model.showUtilityCheat
+                        ? null
+                        : const EdgeInsets.symmetric(vertical: 10),
+                    onPressed: model.onHelpTap,
+                    showExpanded: model.showHelp,
+                    cheatCodes: [
+                      if (model.showUtilityCheat)
+                        (
+                          FontAwesomeIcons.stream,
+                          MathsGameViewModel.utilityCheat
+                        ),
+                      (FontAwesomeIcons.bolt, MathsGameViewModel.bonusCheat),
+                    ],
+                  ),
+                  if (model.showBackButton) const MyBackButton(),
+                  if (model.feedbackText != null)
+                    ...buildFeedbackWidgets(
+                      context,
+                      feedbackType: model.feedbackType,
+                      feedbackText: model.feedbackText!,
+                    ),
+                ],
+              ),
             ),
           ),
         );
