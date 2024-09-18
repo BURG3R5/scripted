@@ -193,6 +193,7 @@ class MathsGameViewModel extends BaseViewModel {
           newLevel: 1,
         );
         log('Reached level 1');
+        notifyListeners();
         triggerEndOfContent();
         return;
       }

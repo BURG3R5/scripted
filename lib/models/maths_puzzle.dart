@@ -62,6 +62,6 @@ class MathsPuzzle {
   String toString() => equation.replaceInOrder({'?', '#'}, solution);
 
   bool expectsOperationAt(int index) {
-    return equation.contains('#') && (equation.indexOf('#') == index);
+    return equation[index] == '#';
   }
 }
