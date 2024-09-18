@@ -7,12 +7,11 @@ import 'package:get/get.dart';
 import '../constants/enums/feedback_type.dart';
 import '../constants/enums/game.dart';
 import '../constants/predefined_puzzles.dart';
-import '../constants/strings.dart';
 import '../core/locator.dart';
-import '../core/router.dart';
 import '../models/cheat_input.dart';
 import '../models/maths_puzzle.dart';
 import '../services/local_storage.dart';
+import '../utils/end_of_content.dart';
 import '../utils/list.dart';
 import 'base.dart';
 
@@ -129,8 +128,7 @@ class MathsGameViewModel extends BaseViewModel {
           newLevel: 1,
         );
         log('Reached level 1');
-        log('Reached end of content');
-        Get.offAndToNamed(AppRoutes.credits, arguments: isTheEnd);
+        triggerEndOfContent();
         return;
       }
     } else {
@@ -195,6 +193,8 @@ class MathsGameViewModel extends BaseViewModel {
           newLevel: 1,
         );
         log('Reached level 1');
+        triggerEndOfContent();
+        return;
       }
 
       notifyListeners();
