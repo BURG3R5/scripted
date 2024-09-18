@@ -8,6 +8,8 @@ class LocalStorageService {
 
   static const String scoreKey = 'SCORE';
 
+  static const String levelKey = 'LEVEL';
+
   static const String hasUnlockedMenuKey = 'HAS_UNLOCKED_MENU';
 
   static const String hasUnlockedGame3Key = 'HAS_UNLOCKED_GAME_3';
@@ -52,11 +54,29 @@ class LocalStorageService {
         .toList();
   }
 
+  List<int> get level {
+    if (!_preferences.containsKey(levelKey)) {
+      _saveToDisk(levelKey, List.filled(7, 0).join(','));
+    }
+
+    return (_getFromDisk(levelKey)! as String)
+        .split(',')
+        .map(int.parse)
+        .toList();
+  }
+
   void setGameScore({required Game game, required int newScore}) {
     final updatedScore = List.from(score);
     updatedScore[game.index] = newScore;
     final scoreString = updatedScore.join(',');
     _saveToDisk(scoreKey, scoreString);
+  }
+
+  void setGameLevel({required Game game, required int newLevel}) {
+    final updatedLevel = List.from(level);
+    updatedLevel[game.index] = newLevel;
+    final levelString = updatedLevel.join(',');
+    _saveToDisk(levelKey, levelString);
   }
 
   bool get hasUnlockedMenu => _getFromDisk(hasUnlockedMenuKey) ?? false;

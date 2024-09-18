@@ -1,4 +1,5 @@
 import 'package:awesome_icons/awesome_icons.dart';
+import 'package:double_tap_exit/double_tap_exit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pie_menu/pie_menu.dart';
@@ -7,6 +8,8 @@ import 'package:tap_debouncer/tap_debouncer.dart';
 import '../../../constants/enums/operation.dart';
 import '../../../models/cheat_input.dart';
 import '../../../viewmodels/maths.dart';
+import '../../components/back.dart';
+import '../../components/conditionally_wrap.dart';
 import '../../components/feedback.dart';
 import '../../components/glow_text.dart';
 import '../../components/help.dart';
@@ -22,36 +25,51 @@ class MathsGame extends StatelessWidget {
     return BaseView<MathsGameViewModel>(
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
-        return Scaffold(
-          body: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                _buildEquation(context, model),
-                _buildBackground(model),
-                ScoreWidget(
-                  score: model.score,
-                  onPressed: () =>
-                      model.addCheatInput(CheatInput.score(model.score)),
-                ),
-                HelpWidget(
-                  containerWidth: 190,
-                  containerHeight: 190,
-                  onPressed: model.onHelpTap,
-                  showExpanded: model.showHelp,
-                  cheatCodes: [
-                    if (model.showUnlockCheat)
-                      (FontAwesomeIcons.unlock, MathsGameViewModel.unlockCheat),
-                    (Icons.card_giftcard, MathsGameViewModel.bonusCheat),
-                  ],
-                ),
-                if (model.feedbackText != null)
-                  ...buildFeedbackWidgets(
-                    context,
-                    feedbackType: model.feedbackType,
-                    feedbackText: model.feedbackText!,
+        return ConditionallyWrap(
+          condition: model.showUtilityCheat,
+          parentBuilder: (child) => DoubleTap(
+            message: 'YOU ARE LOCKED INSIDE THE ARITHMETIC ACTIVITY\n'
+                'PRESS BACK TWICE TO EXIT THE APP ENTIRELY',
+            child: child,
+          ),
+          child: Scaffold(
+            body: Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: <Widget>[
+                  _buildEquation(context, model),
+                  _buildBackground(model),
+                  ScoreWidget(
+                    score: model.score,
+                    onPressed: () =>
+                        model.addCheatInput(CheatInput.score(model.score)),
                   ),
-              ],
+                  HelpWidget(
+                    containerWidth: 190,
+                    containerHeight: model.showUtilityCheat ? 240 : null,
+                    containerPadding: model.showUtilityCheat
+                        ? null
+                        : const EdgeInsets.symmetric(vertical: 10),
+                    onPressed: model.onHelpTap,
+                    showExpanded: model.showHelp,
+                    cheatCodes: [
+                      if (model.showUtilityCheat)
+                        (
+                          FontAwesomeIcons.stream,
+                          MathsGameViewModel.utilityCheat
+                        ),
+                      (FontAwesomeIcons.bolt, MathsGameViewModel.bonusCheat),
+                    ],
+                  ),
+                  if (model.showBackButton) const MyBackButton(),
+                  if (model.feedbackText != null)
+                    ...buildFeedbackWidgets(
+                      context,
+                      feedbackType: model.feedbackType,
+                      feedbackText: model.feedbackText!,
+                    ),
+                ],
+              ),
             ),
           ),
         );
@@ -59,14 +77,14 @@ class MathsGame extends StatelessWidget {
     );
   }
 
-  Expanded _buildBackground(MathsGameViewModel model) {
+  Positioned _buildBackground(MathsGameViewModel model) {
     if (!model.showHelp) {
-      return Expanded(
+      return Positioned.fill(
         child: Container(),
       );
     }
 
-    return Expanded(
+    return Positioned.fill(
       child: TapDebouncer(
         onTap: () async {
           model.showHelp = false;
@@ -77,7 +95,7 @@ class MathsGame extends StatelessWidget {
   }
 
   Widget _buildEquation(BuildContext context, MathsGameViewModel model) {
-    var equation = model.puzzle.toStringWithoutSolution();
+    var equation = model.puzzle.equation;
     var inputFieldIndex = -1;
 
     GlowText buildCharacter(String character) {
@@ -110,6 +128,7 @@ class MathsGame extends StatelessWidget {
           inputOptions.length,
           (optionIndex) {
             final inputCharacter = inputOptions[optionIndex].toString();
+            final thisInputFieldIndex = inputFieldIndex;
 
             return PieAction(
               child: SizedBox(
@@ -120,17 +139,15 @@ class MathsGame extends StatelessWidget {
                 ),
               ),
               tooltip: Container(),
-              onSelect: () => model.onInput(inputFieldIndex, inputCharacter),
+              onSelect: () =>
+                  model.onInput(thisInputFieldIndex, inputCharacter),
             );
           },
         ),
-        child: SizedBox(
-          width: 40,
-          child: AnimatedOpacity(
-            opacity: model.flashingInputFlag ? 1 : 0.3,
-            duration: MathsGameViewModel.flashingDuration,
-            child: buildCharacter(model.currentInput[inputFieldIndex]),
-          ),
+        child: AnimatedOpacity(
+          opacity: model.flashingInputFlag ? 1 : 0.3,
+          duration: MathsGameViewModel.flashingDuration,
+          child: buildCharacter(model.currentInput[inputFieldIndex]),
         ),
       );
     }
@@ -139,11 +156,11 @@ class MathsGame extends StatelessWidget {
       theme: PieTheme(
         customAngleDiff: 360 / 5,
         buttonTheme: const PieButtonTheme(
-          backgroundColor: background,
+          backgroundColor: black,
           iconColor: null,
         ),
         buttonThemeHovered: PieButtonTheme(
-          backgroundColor: Color.lerp(background, primary, 0.33),
+          backgroundColor: Color.lerp(black, primary, 0.33),
           iconColor: null,
         ),
         delayDuration: Duration.zero,
@@ -157,7 +174,7 @@ class MathsGame extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(
             equation.length,
-            (index) => (equation[index] != '?')
+            (index) => (!'?#'.contains(equation[index]))
                 ? buildCharacter(equation[index])
                 : buildInput(index),
           ),

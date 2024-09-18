@@ -40,7 +40,9 @@ class AppRouter {
         );
       case AppRoutes.credits:
         return GetPageRoute(
-          page: Credits.new,
+          page: () => Credits(
+            isTheEnd: (settings.arguments == isTheEnd),
+          ),
           routeName: AppRoutes.credits,
           settings: settings,
         );
@@ -48,7 +50,7 @@ class AppRouter {
       default:
         return GetPageRoute(
           page: () => Scaffold(
-            backgroundColor: background,
+            backgroundColor: black,
             body: Center(
               child: Text('no route defined for ${settings.name}'),
             ),

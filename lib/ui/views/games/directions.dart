@@ -1,3 +1,4 @@
+import 'package:awesome_icons/awesome_icons.dart';
 import 'package:double_tap_exit/double_tap_exit.dart';
 import 'package:flutter/material.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
@@ -5,6 +6,7 @@ import 'package:tap_debouncer/tap_debouncer.dart';
 import '../../../models/cheat_input.dart';
 import '../../../models/directions_puzzle.dart';
 import '../../../viewmodels/directions.dart';
+import '../../components/back.dart';
 import '../../components/conditionally_wrap.dart';
 import '../../components/feedback.dart';
 import '../../components/glow_text.dart';
@@ -24,9 +26,9 @@ class DirectionsGame extends StatelessWidget {
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
         return ConditionallyWrap(
-          condition: !popsToMenu && model.showExitCheat,
+          condition: !popsToMenu && model.showUtilityCheat,
           parentBuilder: (child) => DoubleTap(
-            message: 'YOU ARE LOCKED INTO THE DIRECTIONS GAME\n'
+            message: 'YOU ARE LOCKED INSIDE THE DIRECTIONS ACTIVITY\n'
                 'PRESS BACK TWICE TO EXIT THE APP ENTIRELY',
             child: child,
           ),
@@ -49,18 +51,25 @@ class DirectionsGame extends StatelessWidget {
                   ),
                   HelpWidget(
                     containerWidth: 190,
-                    containerHeight: model.showExitCheat ? 190 : null,
-                    containerPadding: model.showExitCheat
+                    containerHeight: model.showUtilityCheat ? 190 : null,
+                    containerPadding: model.showUtilityCheat
                         ? null
                         : const EdgeInsets.symmetric(vertical: 10),
                     onPressed: model.onHelpTap,
                     showExpanded: model.showHelp,
                     cheatCodes: [
-                      if (model.showExitCheat)
-                        (Icons.exit_to_app, DirectionsGameViewModel.exitCheat),
-                      (Icons.card_giftcard, DirectionsGameViewModel.bonusCheat),
+                      if (model.showUtilityCheat)
+                        (
+                          FontAwesomeIcons.solidShareSquare,
+                          DirectionsGameViewModel.utilityCheat
+                        ),
+                      (
+                        FontAwesomeIcons.bolt,
+                        DirectionsGameViewModel.bonusCheat
+                      ),
                     ],
                   ),
+                  if (model.showBackButton) const MyBackButton(),
                   if (model.feedbackText != null)
                     ...buildFeedbackWidgets(
                       context,
@@ -125,7 +134,10 @@ class DirectionsGame extends StatelessWidget {
                 child: TapDebouncer(
                   onTap: () async =>
                       await model.onInput((rowIndex, columnIndex)),
-                  builder: (_, onTap) => InkWell(onTap: onTap),
+                  builder: (_, onTap) => InkWell(
+                    onTap: onTap,
+                    hoverColor: Colors.transparent,
+                  ),
                 ),
               ),
             ),

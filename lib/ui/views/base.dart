@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/locator.dart';
 import '../../viewmodels/base.dart';
+import '../theme.dart';
 
 class BaseView<T extends BaseViewModel> extends StatefulWidget {
   const BaseView({
@@ -47,6 +49,23 @@ class _BaseViewState<T extends BaseViewModel> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
+    if (context.isPortrait) {
+      return Scaffold(
+        backgroundColor: black,
+        body: Center(
+          child: Text(
+            'Scripted works best in landscape orientation\n'
+            'Please switch to landscape and reload the game',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: primary),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
     return ChangeNotifierProvider<T>.value(
       value: model,
       child: Consumer<T>(

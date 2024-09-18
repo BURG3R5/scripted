@@ -18,7 +18,6 @@ class Menu extends StatelessWidget {
     return BaseView<MenuViewModel>(
       builder: (context, model, child) {
         return Scaffold(
-          // TODO: Add text along the sides
           body: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 15,
@@ -48,7 +47,12 @@ class Menu extends StatelessWidget {
                           enabled: true,
                           icon: FontAwesomeIcons.waveSquare,
                         ),
-                        _buildMenuItem(context, enabled: false),
+                        _buildMenuItem(
+                          context,
+                          title: 'communication',
+                          enabled: false,
+                          icon: FontAwesomeIcons.stream,
+                        ), // TODO: Enable according to value in LocalStorage
                         _buildMenuItem(context, enabled: false),
                       ],
                     ),
@@ -87,7 +91,7 @@ class Menu extends StatelessWidget {
     required bool enabled,
     IconData icon = FontAwesomeIcons.ellipsisH,
   }) {
-    final color = primary.withOpacity(enabled ? 1 : 0.5);
+    final color = Color.lerp(primary, black, enabled ? 0 : 0.5) ?? primary;
 
     return Expanded(
       child: AnimatedGradientBorder(
@@ -108,7 +112,7 @@ class Menu extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              color: background,
+              color: black,
             ),
             alignment: Alignment.center,
             child: Column(

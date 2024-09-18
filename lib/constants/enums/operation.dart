@@ -3,8 +3,7 @@ enum Operation {
   subtract(r'\'),
   multiply('//'),
   divide(r'\\'),
-  raiseTo('///'),
-  unknown('?');
+  raiseTo('///');
 
   final String symbol;
 

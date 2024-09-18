@@ -2,15 +2,16 @@ import 'dart:async';
 import 'dart:developer' show log;
 
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 
 import '../constants/enums/feedback_type.dart';
 import '../constants/enums/game.dart';
-import '../constants/enums/operation.dart';
 import '../constants/predefined_puzzles.dart';
 import '../core/locator.dart';
 import '../models/cheat_input.dart';
 import '../models/maths_puzzle.dart';
 import '../services/local_storage.dart';
+import '../utils/end_of_content.dart';
 import '../utils/list.dart';
 import 'base.dart';
 
@@ -18,32 +19,34 @@ class MathsGameViewModel extends BaseViewModel {
   // Constants:
   static const flashingDuration = Duration(milliseconds: 700);
 
+  static const utilityCheat = <CheatInput>[
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.score(38),
+    CheatInput.score(38),
+    CheatInput.score(38),
+  ];
   static const bonusCheat = <CheatInput>[
     CheatInput.help,
     CheatInput.help,
     CheatInput.help,
     CheatInput.help,
-    CheatInput.score(111),
-    CheatInput.score(111),
+    CheatInput.score(19),
+    CheatInput.score(19),
     CheatInput.help,
     CheatInput.help,
-    CheatInput.score(19),
-    CheatInput.score(19),
-    CheatInput.score(19),
+    CheatInput.score(51),
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.score(51),
+    CheatInput.score(51),
+  ];
+  static const utilityCheatDebug = <CheatInput>[
+    CheatInput.score(1),
   ];
   static const bonusCheatDebug = <CheatInput>[
     CheatInput.score(2),
-  ];
-  static const unlockCheat = <CheatInput>[
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.score(51),
-    CheatInput.score(51),
-    CheatInput.score(51),
-    // TODO: Make the unlock cheat difficult to understand
-  ];
-  static const unlockCheatDebug = <CheatInput>[
-    CheatInput.score(1),
   ];
 
   // Services:
@@ -51,12 +54,14 @@ class MathsGameViewModel extends BaseViewModel {
 
   // Data:
   late int _score;
+  late int _puzzleIndex;
+  late int _levelIndex;
   var _puzzle = MathsPuzzle.empty;
   var _feedbackType = FeedbackType.positive;
   String? _feedbackText;
   var _showHelp = false;
-  var _currentInput = <String>[];
   final _cheatInput = <CheatInput>[];
+  var _currentInput = <String>[];
   bool _flashingInputFlag = true;
 
   // Getters:
@@ -70,9 +75,11 @@ class MathsGameViewModel extends BaseViewModel {
 
   bool get showHelp => _showHelp;
 
-  List<String> get currentInput => _currentInput;
+  bool get showUtilityCheat => !_localStorage.hasUnlockedGame3;
 
-  bool get showUnlockCheat => !_localStorage.hasUnlockedGame3;
+  bool get showBackButton => kIsWeb && (_levelIndex != 0);
+
+  List<String> get currentInput => _currentInput;
 
   bool get flashingInputFlag => _flashingInputFlag;
 
@@ -94,6 +101,8 @@ class MathsGameViewModel extends BaseViewModel {
   // Methods:
   void initialize() {
     _score = _localStorage.score[Game.maths.index];
+    _puzzleIndex = 0;
+    _levelIndex = _localStorage.level[Game.maths.index];
     updatePuzzle();
 
     Timer.periodic(
@@ -106,16 +115,22 @@ class MathsGameViewModel extends BaseViewModel {
   }
 
   void updatePuzzle() {
-    if (_score < mathsPuzzles.length) {
-      _puzzle = mathsPuzzles[_score];
-    } else if (_score == mathsPuzzles.length && kDebugMode) {
-      _puzzle = const MathsPuzzle(
-        operand1: 'END OF PRE',
-        operation: Operation.unknown,
-        operand2: 'DEFINED',
-        result: 'PUZZLES',
-        solution: ['/'],
-      );
+    if (_levelIndex == 0) {
+      if (_puzzleIndex < mathsPuzzles.length) {
+        _puzzle = mathsPuzzles[_puzzleIndex];
+      } else {
+        _puzzle = MathsPuzzle.random();
+      }
+
+      if (_puzzleIndex == mathsPuzzles.length + 5) {
+        _localStorage.setGameLevel(
+          game: Game.maths,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+        triggerEndOfContent();
+        return;
+      }
     } else {
       _puzzle = MathsPuzzle.random();
     }
@@ -141,6 +156,7 @@ class MathsGameViewModel extends BaseViewModel {
       if (listEquals(_currentInput, _puzzle.solution)) {
         _feedbackType = FeedbackType.positive;
         _feedbackText = 'yes';
+        _puzzleIndex++;
         score++;
       } else {
         _feedbackType = FeedbackType.negative;
@@ -166,16 +182,29 @@ class MathsGameViewModel extends BaseViewModel {
     log('Pressed: $input');
     _cheatInput.add(input);
 
-    if (_cheatInput.endsWith(bonusCheat) ||
+    if (_cheatInput.endsWith(utilityCheat) ||
+        (kDebugMode && _cheatInput.endsWith(utilityCheatDebug))) {
+      log('Cheat activated: UTILITY (UNLOCK GAME 3 and EXIT)');
+      _cheatInput.add(const CheatInput.score(-1));
+      if (!_localStorage.hasUnlockedGame3) {
+        _localStorage.hasUnlockedGame3 = true;
+        _localStorage.setGameLevel(
+          game: Game.maths,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+        notifyListeners();
+        triggerEndOfContent();
+        return;
+      }
+
+      notifyListeners();
+      Future.delayed(const Duration(milliseconds: 100), Get.back);
+    } else if (_cheatInput.endsWith(bonusCheat) ||
         (kDebugMode && _cheatInput.endsWith(bonusCheatDebug))) {
       log('Cheat activated: BONUS');
       _cheatInput.add(const CheatInput.score(-1));
       score += 500;
-    } else if (_cheatInput.endsWith(unlockCheat) ||
-        (kDebugMode && _cheatInput.endsWith(unlockCheatDebug))) {
-      log('Cheat activated: UNLOCK');
-      _cheatInput.add(const CheatInput.score(-1));
-      // TODO: Unlock next game/app.
     }
   }
 }

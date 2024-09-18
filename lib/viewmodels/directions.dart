@@ -15,7 +15,7 @@ import 'base.dart';
 
 class DirectionsGameViewModel extends BaseViewModel {
   // Constants:
-  static const exitCheat = <CheatInput>[
+  static const utilityCheat = <CheatInput>[
     CheatInput.score(21),
     CheatInput.score(21),
     CheatInput.score(21),
@@ -27,16 +27,16 @@ class DirectionsGameViewModel extends BaseViewModel {
     CheatInput.help,
     CheatInput.help,
     CheatInput.help,
+    CheatInput.score(12),
+    CheatInput.score(12),
+    CheatInput.help,
+    CheatInput.help,
+    CheatInput.help,
     CheatInput.score(28),
     CheatInput.score(28),
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.help,
-    CheatInput.score(12),
-    CheatInput.score(12),
-    CheatInput.score(12),
+    CheatInput.score(28),
   ];
-  static const exitCheatDebug = <CheatInput>[
+  static const utilityCheatDebug = <CheatInput>[
     CheatInput.score(1),
   ];
   static const bonusCheatDebug = <CheatInput>[
@@ -48,6 +48,8 @@ class DirectionsGameViewModel extends BaseViewModel {
 
   // Data:
   late int _score;
+  late int _puzzleIndex;
+  late int _levelIndex;
   var _puzzle = DirectionsPuzzle.empty;
   var _feedbackType = FeedbackType.positive;
   String? _feedbackText;
@@ -65,7 +67,9 @@ class DirectionsGameViewModel extends BaseViewModel {
 
   bool get showHelp => _showHelp;
 
-  bool get showExitCheat => !_localStorage.hasUnlockedMenu;
+  bool get showUtilityCheat => !_localStorage.hasUnlockedMenu;
+
+  bool get showBackButton => kIsWeb && (_levelIndex != 0);
 
   // Setters:
   set score(int newScore) {
@@ -85,20 +89,26 @@ class DirectionsGameViewModel extends BaseViewModel {
   // Methods:
   void initialize() {
     _score = _localStorage.score[Game.directions.index];
+    _puzzleIndex = 0;
+    _levelIndex = _localStorage.level[Game.directions.index];
     updatePuzzle();
   }
 
   void updatePuzzle() {
-    if (_score < directionsPuzzles.length) {
-      _puzzle = directionsPuzzles[_score];
-    } else if (_score == directionsPuzzles.length && kDebugMode) {
-      _puzzle = const DirectionsPuzzle(
-        instructions: [
-          DirectionsGameInstruction(text: 'END OF PRE-DEFINED PUZZLES')
-        ],
-        solution: (0, 0),
-        partitions: (1, 1),
-      );
+    if (_levelIndex == 0) {
+      if (_puzzleIndex < directionsPuzzles.length) {
+        _puzzle = directionsPuzzles[_puzzleIndex];
+      } else {
+        _puzzle = DirectionsPuzzle.random();
+      }
+
+      if (_puzzleIndex == directionsPuzzles.length + 5) {
+        _localStorage.setGameLevel(
+          game: Game.directions,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+      }
     } else {
       _puzzle = DirectionsPuzzle.random();
     }
@@ -119,6 +129,7 @@ class DirectionsGameViewModel extends BaseViewModel {
     if (tapLocation == _puzzle.solution) {
       _feedbackType = FeedbackType.positive;
       _feedbackText = 'yes';
+      _puzzleIndex++;
       score++;
     } else {
       _feedbackType = FeedbackType.negative;
@@ -143,11 +154,18 @@ class DirectionsGameViewModel extends BaseViewModel {
     log('Pressed: $input');
     _cheatInput.add(input);
 
-    if (_cheatInput.endsWith(exitCheat) ||
-        (kDebugMode && _cheatInput.endsWith(exitCheatDebug))) {
-      log('Cheat activated: EXIT');
+    if (_cheatInput.endsWith(utilityCheat) ||
+        (kDebugMode && _cheatInput.endsWith(utilityCheatDebug))) {
+      log('Cheat activated: UTILITY (UNLOCK MENU and EXIT)');
       _cheatInput.add(const CheatInput.score(-1));
-      _localStorage.hasUnlockedMenu = true;
+      if (!_localStorage.hasUnlockedMenu) {
+        _localStorage.hasUnlockedMenu = true;
+        _localStorage.setGameLevel(
+          game: Game.directions,
+          newLevel: 1,
+        );
+        log('Reached level 1');
+      }
 
       notifyListeners();
       Future.delayed(const Duration(milliseconds: 100), Get.back);
