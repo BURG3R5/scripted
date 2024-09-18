@@ -91,7 +91,7 @@ class Menu extends StatelessWidget {
     required bool enabled,
     IconData icon = FontAwesomeIcons.ellipsisH,
   }) {
-    final color = primary.withOpacity(enabled ? 1 : 0.5);
+    final color = Color.lerp(primary, black, enabled ? 0 : 0.5) ?? primary;
 
     return Expanded(
       child: AnimatedGradientBorder(
